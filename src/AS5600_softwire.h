@@ -3,7 +3,7 @@
   AMS 5600 class for Arduino platform
   Author: Tom Denton
   Date: 15 Dec 2014
-  File: AMS_5600.h 
+  File: AMS_5600_softwire.h 
   Version 1.00
   www.ams.com
    
@@ -15,16 +15,17 @@
 
 // datasheet: https://ams.com/documents/20143/36005/AS5600_DS000365_5-00.pdf
 
-#ifndef AMS_5600_h
-#define AMS_5600_h
+#ifndef AMS_5600_SOFTWIRE_h
+#define AMS_5600_SOFTWIRE_h_h
 
 #include <Arduino.h>
+#include <SoftWire.h>
 
-class AMS_5600
+class AMS_5600_SOFTWIRE
 {
 public:
 
-  AMS_5600(void);
+  AMS_5600_SOFTWIRE(uint8_t, uint8_t);
   int getAddress();
 
   word setMaxAngle(word newMaxAngle = -1);
@@ -50,9 +51,14 @@ public:
   int burnAngle();
   int burnMaxAngleAndConfig();
   void setOutPut(uint8_t mode);
+  
+  
 
 private:
 
+  SoftWire sw;
+  static char swTxBuffer[16];
+  static char swRxBuffer[16];
   // i2c address
   static const uint8_t _ams5600_Address = 0x36;
   
